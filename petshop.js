@@ -4,6 +4,7 @@ const json = require('./json')
 
 let pets = [
   {
+    id: 1,
     nome: 'Yoshi',
     tipo: 'cachorro',
     raca: 'Akita inu',
@@ -13,6 +14,7 @@ let pets = [
     servicos: [],
   },
   {
+    id: 2,
     nome: 'Pituco',
     tipo: 'passaro',
     raca: 'calopsita',
@@ -26,34 +28,59 @@ let pets = [
 // Todas as Funções 
 
     // Listar os pets :
-function listarPets(arrayPets) {
-  for (let i = 0; i < arrayPets.length; i++) {
-    console.log("Nome: " + arrayPets[i].nome + " Tipo: "
-      + arrayPets[i].tipo
-    );
-  }
+
+const listarPets = (arrayPets) => {
+  arrayPets.forEach(element => {
+    console.log("Nome: " + element.nome + " | Tipo: " + element.tipo);
+  })
 }
 
-    // Listar Pets Vacinados
-function listarVacinados(arrayPets) {
-  for (let i = 0; i < arrayPets.length; i++) {
-    if (arrayPets[i].vacinado) {
-      console.log(arrayPets[i].nome, 'está vacinado!')
-    } else {
-      console.log(arrayPets[i].nome, 'não está vacinado!')
-    }
+    // Filtrar pet por nome: 
+
+const filtrarNomePets = nome => {
+  let petsFiltrados = pets.filter(pet => {     // REVISAR .FILTER
+    return pet.nome == nome
+  })
+  if(petsFiltrados.length == 0) {
+    return 'Nenhum pet encontrado'
+  } else return petsFiltrados
+}
+
+    // Filtrar por ID:
+
+  const filtrarPorID = id => {
+    let petFiltrado = pets.filter(pet => {
+      return pet.id == id
+    })
+    if (petFiltrado.length == 0) {
+      return 'Nenhum pet com o ID ' + id + ' encontrado'
+    } else return petFiltrado
   }
+
+    // Lista pets vacinados
+
+const listarVacinados = (arrayPets) => {
+  arrayPets.forEach(element => {
+    if (element.vacinado) {
+      console.log(element.nome, 'está vacinado!')
+    } else {
+      console.log(element.nome, 'não está vacinado!')
+    }
+  })
 }
 
     // Validar se o objeto possui as Keys necessárias
-function validaPet(objetoPet) {
+
+const validaDados = (objetoPet) => {
   return (objetoPet.nome && objetoPet.tipo && objetoPet.raca && objetoPet.idade && objetoPet.genero && typeof objetoPet.vacinado == "boolean")
 }
 
     // Cadastrar um novo pet
-function cadastrarPet(objetoPet) {
-  if (typeof objetoPet == "object"){
-    if (validaPet(objetoPet)) {
+
+const cadastrarPet = (objetoPet) => {
+  if (typeof objetoPet == "object") {
+    if (validaDados(objetoPet)) {
+      objetoPet.id = randomID()
       pets.push(objetoPet);
       console.log('Pet cadastrado com sucesso!')
     } else {
@@ -65,9 +92,31 @@ function cadastrarPet(objetoPet) {
   }
 }
 
-  // Cadastrar Lista JSON
+    // Remover um pet da nossa lista
 
-function cadastrarJson(lista, json) {
+const removerPet = id => {
+  let pet = pets.find(pet => pet.id == id)
+  pets.splice(pets.indexOf(pet), 1) 
+}
+
+    // Alterar dados pet
+
+const alterarPet = (id, key, valor) => {
+  let pet = pets.find(pet => pet.id == id)
+  let objeto = pets[pets.indexOf(pet)]
+  objeto[key] = valor
+} 
+
+    // Random ID generator
+
+function randomID() { 
+  return Math.floor(Math.random() * 100) // Math.random way, can have conflicts
+  // Date.now() // Give date in miliseconds
+}
+
+    // Cadastrar Lista JSON
+
+const cadastrarJson = (lista, json) => {
   let arrayPets = JSON.parse(json)
   for (let object of arrayPets) {
     lista.push(object)
@@ -75,7 +124,8 @@ function cadastrarJson(lista, json) {
 }
 
     // Verificar se está vacinado
-function estaVacinado(objetoPet) {
+
+const estaVacinado = (objetoPet) => {
   if (objetoPet.vacinado == true) {
     console.log("Esse Pet já está vacinado")
   } else {
@@ -84,24 +134,35 @@ function estaVacinado(objetoPet) {
 }
 
     // Serviços 
-function fazerServico(pet, servico) {
+
+const fazerServico = (pet, servico) => {
   servico(pet)
 }
 
-function tosar(pet) {
-  pet.servicos.push("tosou dia " + new Date())
-  console.log(`O ${pet.nome} está sendo tosado`)
-
+const tosar = (pet) => {
+  let data = new Date
+  let dataFinal = data.getDate() + "/" + (data.getMonth() + 1) + '/' + data.getFullYear()
+  pet.servicos.push("Tosa dia " + dataFinal)
+  console.log(`O ${pet.nome} está sendo tosado`);
 }
 
-function banho(pet) {
-  pet.servicos.push("banho dia " + new Date())
-  console.log(`O ${pet.nome} está sendo tosado`)
+const banho = (pet) => {
+  let data = new Date
+  let dataFinal = data.getDate() + "/" + (data.getMonth() + 1) + '/' + data.getFullYear()
+  pet.servicos.push("Banho dia " + dataFinal)
+  console.log(`O ${pet.nome} está tomando banho`)
 }
 
-// Executando funções
+// 
 
-cadastrarJson(pets, json)
-
-console.log(pets)
+let objetoPet1 = {
+    id: '',
+    nome: 'Piadsdas',
+    tipo: 'passaro',
+    raca: 'calopsita',
+    idade: 3,
+    genero: 'femea',
+    vacinado: false,
+    servicos: [],
+  }
 
