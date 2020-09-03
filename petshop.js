@@ -1,4 +1,5 @@
-const json = require('./json')
+const json = require('./json');
+const { indexOf } = require('./json');
 
 //
 
@@ -95,17 +96,30 @@ const cadastrarPet = (objetoPet) => {
     // Remover um pet da nossa lista
 
 const removerPet = id => {
+
   let pet = pets.find(pet => pet.id == id)
-  pets.splice(pets.indexOf(pet), 1) 
+  let index = pets.indexOf(pet)
+
+  if (index != -1) {
+    pets.splice(index, 1) 
+  } else {
+    console.log('Nenhum pet encontrado com o ID', id)
+  } 
 }
 
     // Alterar dados pet
 
 const alterarPet = (id, key, valor) => {
   let pet = pets.find(pet => pet.id == id)
-  let objeto = pets[pets.indexOf(pet)]
-  objeto[key] = valor
-} 
+  let index = pets.indexOf(pet)
+  if (index != -1) {
+    let objeto = pets[pets.indexOf(pet)]
+    objeto[key] = valor
+  } else {
+    console.log('Não foi encontrado pet com id: ', id)
+  }
+
+}
 
     // Random ID generator
 
