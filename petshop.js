@@ -109,6 +109,7 @@ const removerPet = id => {
 
     // Alterar dados pet
 
+      // Altera inserindo um id, key e valor
 const alterarPet = (id, key, valor) => {
   let pet = pets.find(pet => pet.id == id)
   let index = pets.indexOf(pet)
@@ -118,6 +119,21 @@ const alterarPet = (id, key, valor) => {
   } else {
     console.log('Não foi encontrado pet com id: ', id)
   }
+}
+      // ALtera recebendo um objeto com as informaçoes novas e o valor
+const alterarPet2 = (objeto, id) => {
+
+  let pet = pets.find(pet => pet.id == id)
+  let objetoAlterar = pets[pets.indexOf(pet)]
+
+    for (const prop in objeto) {
+      if (prop in objetoAlterar) {
+        objetoAlterar[prop] = objeto[prop]
+        
+      } else console.log(prop, 'propriedade não encontrada.' )
+    }
+
+    console.log(objetoAlterar)
 
 }
 
@@ -170,13 +186,14 @@ const banho = (pet) => {
 // 
 
 let objetoPet1 = {
-    id: '',
-    nome: 'Piadsdas',
+    id: '3',
+    nomeaa: 'Piadsdas',
     tipo: 'passaro',
     raca: 'calopsita',
     idade: 3,
     genero: 'femea',
     vacinado: false,
-    servicos: [],
+    servicos: ['adas'],
   }
 
+alterarPet2(objetoPet1, 2)
