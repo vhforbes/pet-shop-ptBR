@@ -1,32 +1,4 @@
-const json = require('./json');
-const { indexOf } = require('./json');
-
-//
-
-let pets = [
-  {
-    id: 1,
-    nome: 'Yoshi',
-    tipo: 'cachorro',
-    raca: 'Akita inu',
-    idade: 6,
-    genero: 'Masculino',
-    vacinado: true,
-    servicos: [],
-  },
-  {
-    id: 2,
-    nome: 'Pituco',
-    tipo: 'passaro',
-    raca: 'calopsita',
-    idade: 3,
-    genero: 'femea',
-    vacinado: false,
-    servicos: [],
-  }
-];
-
-// Todas as Funções 
+//Todas as Funções 
 
     // Listar os pets :
 
@@ -183,17 +155,21 @@ const banho = (pet) => {
   console.log(`O ${pet.nome} está tomando banho`)
 }
 
-// 
 
-let objetoPet1 = {
-    id: '3',
-    nomeaa: 'Piadsdas',
-    tipo: 'passaro',
-    raca: 'calopsita',
-    idade: 3,
-    genero: 'femea',
-    vacinado: false,
-    servicos: ['adas'],
-  }
-
-alterarPet2(objetoPet1, 2)
+module.exports = { 
+  listarPets,
+  filtrarNomePets,
+  filtrarPorID,
+  listarVacinados,
+  validaDados,
+  cadastrarPet,
+  removerPet,
+  alterarPet,
+  alterarPet2,
+  randomID,
+  cadastrarJson,
+  estaVacinado,
+  fazerServico,
+  tosar,
+  banho,
+ }
